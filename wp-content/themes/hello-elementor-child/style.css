@@ -344,7 +344,7 @@ input.wpcf7-submit   { background: #f29e0b !important; border: none; color: #fff
 
 }
 @media (min-width: 100px) and (max-width: 767px) {
-    #sticky-head { position: relative; top:0;}
+    #sticky-head, #sticky-head.hfe-sticky { position: relative; top:0;}
   .grid-3 , .grid-2{ grid-template-columns: 1fr;}
   .checkboForm label, .checkboForm p { display: block;}
 
@@ -379,11 +379,11 @@ input.wpcf7-submit   { background: #f29e0b !important; border: none; color: #fff
   
   
 }
-.owl-carousel .owl-item img { border-radius: 15px 15px 0 0;}
+.owl-carousel .owl-item img, .gl_service_list img { border-radius: 15px 15px 0 0;}
 .content_outer { padding: 25px;}
 .service_slider { font-size: 20px; text-transform: uppercase; font-weight: bold; color: #141521;}
 .service_content { padding-top: 10px; }
-.service_content p {color: #141521; font-weight: bold !important;}
+.service_content p {color: #141521; font-weight: 400 !important;}
 
 button.prev-btn, button.next-btn, button.prev-btn2, button.next-btn2 { padding: 0px !important; width: 35px; height: 35px; background: #d6c483 !important; border: none !important; border-radius: 50%;}
 
@@ -401,3 +401,5 @@ button.prev-btn, button.next-btn, button.prev-btn2, button.next-btn2 { padding: 
   
 
 }
+
+.gl_service_list { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px;}

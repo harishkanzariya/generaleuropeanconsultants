@@ -53,7 +53,7 @@ function example_body_open () { ?>
 
 <div class="preloader">
     <div class="preloader_inner">
-        <img class="logo" width="200" src="<?php echo site_url(); ?>/wp-content/themes/hello-elementor-child/assets/images/logo.png"
+        <img class="logo" width="300" src="<?php echo site_url(); ?>/wp-content/themes/hello-elementor-child/assets/images/logo.png"
             alt="<?php bloginfo( 'name' ); ?>">
         <div class="loadingLogo">
 
@@ -74,7 +74,7 @@ jQuery('.preloader').delay(800).fadeOut(800);
         right: 0;
         top: 0;
         bottom: 0;
-        background: #fff;
+        background: #131521;
         z-index: 999999;
     }
     .preloader_inner {
@@ -531,14 +531,14 @@ function service_slider_func($atts)
                     
                         $output .= '<div class="item_img">';
                                 if (has_post_thumbnail($post->ID)) {
-                                    $output .='<a href="services">';
+                                //    $output .='<a href="services">';
                                     $output .= '<img src="' . $thumbnail['0'] . '" alt="' . $thumbnail_alt . '" />';
-                                    $output .='</a>';
+                                 //   $output .='</a>';
                                 } else {
-                                    $output .='<a href="services">';
+                                //    $output .='<a href="services">';
                                     $output .=  '<img src="' . get_bloginfo('stylesheet_directory')
                                         . '/assets/images/no_img_1.png" alt="" />';
-                                        $output .='</a>';
+                                    //    $output .='</a>';
                                 }
                         $output .= '</div>';
                         $output .= '<div class="content_outer">';
@@ -659,3 +659,80 @@ function service_codex_custom()
     register_post_type('services', $args);
 }
 add_action('init', 'service_codex_custom');
+
+
+
+
+function all_service_fanc($atts)
+{
+
+	$attr = shortcode_atts(array(
+        
+        'post_type' => "services",
+        'image_size' => "full",
+        'no_of_item_desktop' => 3,
+        'no_of_item_tablet' => 2,
+        'no_of_item_mobile' => 1,
+        'pagination_arrow' => "no",
+        'pagination_dot' => "no",
+        'loop' => "yes",
+        'images' => "",
+        'slider_speed' => "10000",
+        'cate_id' => "3",
+        'slider_autoplay' => "false",
+
+    ), $atts);
+	
+    $output                   = "";
+	global $wp_query;
+    
+	$args = array(
+		'post_type' => $attr["post_type"],
+		'post_status' => 'publish',
+		'posts_per_page' => 1000
+	);
+
+	$loop = new WP_Query($args);
+
+	if (!empty($loop->posts)) {
+		$output .= '<div class="gl_service_list">';
+		foreach ($loop->posts as $key => $post) {
+            $thumbnail_id  = get_post_thumbnail_id($post->ID);
+            $thumbnail_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+            $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
+            $content = get_the_excerpt($post->ID);
+            $output .= '<div class="item">';
+                        $output .= '<div class="item_img">';
+                                if (has_post_thumbnail($post->ID)) {
+                                 //   $output .='<a href="services">';
+                                    $output .= '<img src="' . $thumbnail['0'] . '" alt="' . $thumbnail_alt . '" />';
+                                 //   $output .='</a>';
+                                } else {
+                                 //   $output .='<a href="services">';
+                                    $output .=  '<img src="' . get_bloginfo('stylesheet_directory')
+                                        . '/assets/images/no_img_1.png" alt="" />';
+                                    //    $output .='</a>';
+                                }
+                        $output .= '</div>';
+                        $output .= '<div class="content_outer">';
+                        $output .= '<div class="service_slider"> '. get_the_title($post->ID).' </div>';
+                        $output .= '<div class="service_content"><p> '.$content.' </p></div>';
+
+			    $output .= ' </div>';
+                $output .= ' </div>';
+		}
+		$output .= '</div>';
+
+	}
+
+    
+    
+    return $output;
+
+
+}
+
+
+add_shortcode('gl_service_list', 'all_service_fanc');
+
+
